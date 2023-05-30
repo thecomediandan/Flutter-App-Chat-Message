@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_yes_no_app/domain/entities/message.dart';
 
 //import 'package:flutter/src/widgets/framework.dart';
 //import 'package:flutter/src/widgets/placeholder.dart';
 // * Mensajes de parte mia
 class MyMessageBuble extends StatelessWidget {
-  const MyMessageBuble({super.key});
+  final Message msg;
+  const MyMessageBuble({super.key, required this.msg});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +22,11 @@ class MyMessageBuble extends StatelessWidget {
           // * Decoraciones del contenedor
           decoration: BoxDecoration(
               color: colors.primary, borderRadius: BorderRadius.circular(20)),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
-              'lorem jfnsuoidhnfio',
-              style: TextStyle(color: Colors.white),
+              msg.text,
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ),
@@ -32,12 +34,12 @@ class MyMessageBuble extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        // * Imagen que aparecera como envio de parte mia
-        _ImageMessageBubble(),
-        // * Widget de separación de elementos
-        const SizedBox(
-          height: 10,
-        )
+        // // * Imagen que aparecera como envio de parte mia
+        // _ImageMessageBubble(),
+        // // * Widget de separación de elementos
+        // const SizedBox(
+        //   height: 10,
+        // )
       ],
     );
   }

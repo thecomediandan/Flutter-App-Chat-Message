@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MessageFieldBox extends StatelessWidget {
-  const MessageFieldBox({super.key});
+  // * Requerimos de ValueChanged, un tipo de variable que almacena una funcion que no retorna nada, en el cual especificamos que espera recibir un String como parámetro con <String>
+  final ValueChanged<String> onValue;
+  const MessageFieldBox({super.key, required this.onValue});
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +29,11 @@ class MessageFieldBox extends StatelessWidget {
         // * Aqui va el boton de envío, el submit
         suffixIcon: IconButton(
             onPressed: () {
-              print('El mensaje es: ${textController.value.text}');
+              // print('El mensaje es: ${textController.value.text}');
+              // * onFieldSubmitted recibe como elemento una funcion vacía de tipo ValueChanged, que a diferencia de VoidCallback en el onEditingComplete o cualquier otra funbcion sin parámetros, este recibe parámetros. Usamos esta lógica para crear una variable que almacene una funcion que reciba paramteros para funcionar a la cual lllamamos onValue
+              onValue(textController.value.text);
               textController.clear();
+              focusNode.requestFocus();
             },
             icon: const Icon(Icons.send_outlined)));
 
@@ -44,7 +49,9 @@ class MessageFieldBox extends StatelessWidget {
       },
       // * Este evento captura cada vez que se envia la información a traves del boton de envio que tiene por defecto el TextFormField (suffixIcon del inputDecoration)
       onFieldSubmitted: (value) {
-        print('Submit value: $value');
+        // print('Submit value: $value');
+        // * onFieldSubmitted recibe como elemento una funcion vacía de tipo ValueChanged, que a diferencia de VoidCallback en el onEditingComplete o cualquier otra funbcion sin parámetros, este recibe parámetros. Usamos esta lógica para crear una variable que almacene una funcion que reciba paramteros para funcionar a la cual lllamamos onValue
+        onValue(value);
         textController.clear();
         focusNode.requestFocus();
       },

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_yes_no_app/domain/entities/message.dart';
+//import 'package:flutter_app_yes_no_app/infrastructure/models/yes_no_model.dart';
 
 //import 'package:flutter/src/widgets/framework.dart';
 //import 'package:flutter/src/widgets/placeholder.dart';
 // * Mensajes de parte de ella
 class HerMessageBubble extends StatelessWidget {
-  const HerMessageBubble({super.key});
+  final Message msg;
+  const HerMessageBubble({super.key, required this.msg});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +23,11 @@ class HerMessageBubble extends StatelessWidget {
           // * Decoraciones del contenedor
           decoration: BoxDecoration(
               color: colors.secondary, borderRadius: BorderRadius.circular(20)),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
-              'lorem jfnsuoidhnfio',
-              style: TextStyle(color: Colors.white),
+              msg.text,
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ),
@@ -32,8 +35,8 @@ class HerMessageBubble extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        // * Imagen que aparecera como envio de parte de ella
-        _ImageMessageBubble(),
+        // * Imagen que aparecera como envio de parte de ella con NotNullAssertion osea con el simbolo de admiracion
+        _ImageMessageBubble(url: msg.imageURL!),
         // * Widget de separación de elementos
         const SizedBox(
           height: 10,
@@ -46,6 +49,9 @@ class HerMessageBubble extends StatelessWidget {
 // * Este es el Widget con estado que contendrá las imagenes de envio
 // * API de Gifs https://yesno.wtf/api utilizar Postman
 class _ImageMessageBubble extends StatelessWidget {
+  final String url;
+  const _ImageMessageBubble({required this.url});
+
   @override
   Widget build(BuildContext context) {
     // * Con esto obtenemos las dimensiones del dispositivo
@@ -74,8 +80,7 @@ class _ImageMessageBubble extends StatelessWidget {
           fit: BoxFit.cover,
           width: size.width * 0.7,
           // * Capturamos la imagen de internet
-          image: const NetworkImage(
-              'https://yesno.wtf/assets/yes/11-a23cbde4ae018bbda812d2d8b2b8fc6c.gif')),
+          image: NetworkImage(url)),
     );
   }
 }
